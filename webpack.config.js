@@ -19,8 +19,10 @@ module.exports = {
         filename: "bundle.js"
     },
 
-    devtool: isProduction ? "" : "inline-source-map",
+    devtool: "source-map",
     devServer: {
+        host: "192.168.0.102",
+        port: 8080,
         contentBase: "./src"
     },
 

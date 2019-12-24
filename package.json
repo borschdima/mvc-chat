@@ -1,7 +1,7 @@
 {
-    "name": "my-webpack-config",
+    "name": "mvp-chat-app",
     "version": "1.0.0",
-    "description": "",
+    "description": "MVP Chat App",
     "main": "index.js",
     "scripts": {
         "build": "webpack --mode=development",
@@ -32,5 +32,6 @@
         "webpack": "^4.41.4",
         "webpack-cli": "^3.3.10",
         "webpack-dev-server": "^3.10.1"
-    }
+    },
+    "dependencies": {}
 }
