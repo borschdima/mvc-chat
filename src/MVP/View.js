@@ -6,6 +6,7 @@ import { Russian } from "flatpickr/dist/l10n/ru.js";
 import "../css/style.scss";
 
 export default class View {
+    //Global variables corresponding to DOM containers
     messanger = document.querySelector(".messanger");
     chat = document.querySelector(".messanger .messanger__chat");
     chatBody = document.querySelector(".messanger .messanger__chat .chat__body");
@@ -31,6 +32,7 @@ export default class View {
         this.renderContacts(this.dbData);
         this.renderChat(this.dbData[0]);
         this.eventHandler();
+        // Initialize datepicker and giving it basic setup
         flatpickr(".flatpickr", {
             disableMobile: "true",
             locale: Russian,
@@ -39,11 +41,13 @@ export default class View {
         });
     };
 
+    // Make an appropriate look on mobile devices. Function takes into account browser's top header and fix container height
     setWindowHeight = () => {
         const vh = window.innerHeight * 0.01;
         this.messanger.style.setProperty("--vh", `${vh}px`);
     };
 
+    // Handling different events on DOM elements
     eventHandler = () => {
         this.messanger.addEventListener("click", this.messangerClickHandler);
         this.chat.addEventListener("click", this.chatClickHandler);
@@ -53,6 +57,7 @@ export default class View {
         window.addEventListener("resize", this.setWindowHeight);
     };
 
+    // Render contacts into the left section
     renderContacts = dbData => {
         const data = dbData;
 
@@ -63,6 +68,8 @@ export default class View {
         });
     };
 
+    // Render dialog window into the right section. At first it takes dialog with a first contact from the contact group
+    // It devides into two parts. Header and message history
     renderChat = dbData => {
         const item = dbData;
         const contactTemplate = this.contactRenderTemplate(item, true);
@@ -81,6 +88,7 @@ export default class View {
         });
     };
 
+    // When we click on a contact these two functions will be invoked to refresh pages with the new data
     clearChatPage = () => {
         this.chatHeader.querySelector(".contacts__item").remove();
         const oldMessages = this.chatBody.querySelectorAll(".chat__messaage");
@@ -94,6 +102,7 @@ export default class View {
         [].slice.call(oldContacts).forEach(contact => contact.remove());
     };
 
+    // Filtering contacts in the contact group section
     filterHandler = e => {
         const value = e.target.value.toLowerCase();
         const allContacts = this.contacts.querySelectorAll(".contacts__item");
@@ -109,12 +118,14 @@ export default class View {
         });
     };
 
+    // Allows to send messages with enter pressed
     newMessageInputHandler = e => {
         if (e.keyCode == 13) {
             this.newMessageClickHandler();
         }
     };
 
+    // Allows to send message. It displays in message history with a particular contact
     newMessageClickHandler = () => {
         const message = this.newMessage.value;
         if (message) {
@@ -134,6 +145,7 @@ export default class View {
         }
     };
 
+    // Toogle the chat section on mobile devices and render corresponding chat history with a selected contact
     messangerClickHandler = e => {
         if (e.target.closest(".contacts__item")) {
             this.chat.classList.add("messanger__chat--open");
@@ -144,12 +156,14 @@ export default class View {
         }
     };
 
+    // Allows to return back to contacts section on mobile devices
     chatClickHandler = e => {
         if (e.target.closest(".chat__close")) {
             this.chat.classList.remove("messanger__chat--open");
         }
     };
 
+    // Function renders contact item element depending on its location
     contactRenderTemplate = (contact, header = false) => {
         const { messageHistory, contactId, contactAvatar, contactName } = contact;
         let { messageText, isMine } = messageHistory[messageHistory.length - 1];
