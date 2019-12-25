@@ -23,7 +23,15 @@
                 <div class="messanger__chat d-flex flex-column">
                     <div class="chat__header d-flex py-2 px-4 align-items-center">
                         <div class="chat__close p-3 d-none"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
-                        <!-- Here will be placed selected contact  -->
+                        <div class="selected-contact__wrapper">
+                            <!-- Here will be placed selected contact  -->
+                        </div>
+                        <div id="flatpickr" class="flatpickr">
+                            <input type="text" class="p-1" placeholder="По дате" data-input />
+                            <a class="input-button d-flex align-items-center" title="toggle" data-toggle>
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="chat__body d-flex flex-column p-4">
                         <!-- Here messages will be placed  -->

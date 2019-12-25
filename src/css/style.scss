@@ -27,7 +27,7 @@ body {
 }
 
 .separator {
-    height: 1px;
+    height: 2px;
     background-color: #535563;
 }
 .contacts__search {
@@ -56,6 +56,14 @@ body {
 .contacts {
     overflow-y: auto;
     overflow-x: hidden;
+
+    .separator {
+        height: 1px;
+        background-color: #535563;
+        flex-shrink: 0;
+        width: 90%;
+        align-self: center;
+    }
 }
 
 .contacts__item {
@@ -109,6 +117,26 @@ body {
         &:hover {
             color: #515361;
             transition: 0.3s ease;
+        }
+    }
+
+    #flatpickr {
+        position: relative;
+        flex-grow: 1;
+        text-align: right;
+        margin-right: 5px;
+
+        input {
+            width: 110px;
+            outline: none;
+            margin: 0;
+        }
+
+        a {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            height: 100%;
         }
     }
 }

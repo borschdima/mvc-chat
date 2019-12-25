@@ -1,3 +1,8 @@
+import "../css/flatpickr.min.scss";
+import "../css/dark.scss";
+import flatpickr from "flatpickr";
+import { Russian } from "flatpickr/dist/l10n/ru.js";
+
 import "../css/style.scss";
 
 export default class View {
@@ -9,6 +14,8 @@ export default class View {
     btnSendMessage = document.querySelector(".btn.btn-send");
     contacts = document.querySelector(".messanger .contacts");
     chatHeader = document.querySelector(".messanger .chat__header");
+    headerContactWrapper = document.querySelector(".messanger .chat__header .selected-contact__wrapper");
+    flatpickrField = document.querySelector("#flatpickr");
 
     dbData = null;
 
@@ -24,6 +31,12 @@ export default class View {
         this.renderContacts(this.dbData);
         this.renderChat(this.dbData[0]);
         this.eventHandler();
+        flatpickr(".flatpickr", {
+            disableMobile: "true",
+            locale: Russian,
+            dateFormat: "d.m.Y",
+            wrap: true
+        });
     };
 
     setWindowHeight = () => {
@@ -53,7 +66,7 @@ export default class View {
     renderChat = dbData => {
         const item = dbData;
         const contactTemplate = this.contactRenderTemplate(item, true);
-        this.chatHeader.insertAdjacentHTML("beforeend", contactTemplate);
+        this.headerContactWrapper.insertAdjacentHTML("beforeend", contactTemplate);
 
         const messages = item.messageHistory;
         messages.forEach(({ isMine, messageText, messageTime = this.presenter.getTime }) => {
@@ -144,10 +157,12 @@ export default class View {
 
         let messageTemplate = isMine ? `<span>Вы: </span>${messageText}` : messageText;
         let darkNameClass = "";
+        let separator = `<div class="separator my-1 d-flex"></div>`;
 
         if (header) {
             messageTemplate = "Online";
             darkNameClass += "contacts__item-name--dark";
+            separator = "";
         }
         return `
             <div class="contacts__item d-flex p-2" data-id="${contactId}">
@@ -157,7 +172,7 @@ export default class View {
                     <div class="contacts__item-message">${messageTemplate}</div>
                 </div>
             </div>
-            <div class="separator my-1"></div>
+            ${separator}
         `;
     };
 }
